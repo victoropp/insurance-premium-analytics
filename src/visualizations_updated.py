@@ -681,24 +681,31 @@ class ProfessionalVisualizationEngine:
             # Show test set rankings
             test_results_sorted = test_results.sort_values('Test_R2')
             
-            fig.add_trace(
-                go.Bar(
-                    x=test_results_sorted['Test_R2'],
-                    y=['Voting<br>Ensemble', 'Stacking<br>(Ridge)', 'Stacking<br>(Linear)'],
-                    orientation='h',
-                    marker=dict(
-                        color=['#FF6B6B', '#4ECDC4', '#45B7D1'],  # Three distinct colors: red, teal, blue
-                        showscale=False,
-                        line=dict(color='white', width=1)
-                    ),
-                    text=[f'{x:.5f}' for x in test_results_sorted['Test_R2']],
-                    textposition='outside',  # Changed to outside for visibility
-                    textfont=dict(size=10, color=self.colors['dark']),  # Dark color for visibility
-                    hovertemplate='<b>%{customdata[0]}</b><br>Test R²: %{x:.5f}<br>Test RMSE: %{customdata[1]:.4f}<extra></extra>',
-                    customdata=[[name, rmse] for name, rmse in zip(test_results_sorted['Model'], test_results_sorted['Test_RMSE'])]
-                ),
-                row=2, col=2
-            )
+            # Create three separate bar traces with explicit colors
+            models_data = [
+                ('Voting Ensemble', 'Voting<br>Ensemble', '#C73E1D'),  # Red
+                ('Stacking (Ridge)', 'Stacking<br>(Ridge)', '#6C91C2'),  # Blue
+                ('Stacking (Linear)', 'Stacking<br>(Linear)', '#73AB84')  # Green
+            ]
+            
+            for model_name, display_name, color in models_data:
+                row_data = test_results_sorted[test_results_sorted['Model'] == model_name]
+                if not row_data.empty:
+                    fig.add_trace(
+                        go.Bar(
+                            x=row_data['Test_R2'].values,
+                            y=[display_name],
+                            orientation='h',
+                            marker_color=color,
+                            text=[f'{row_data["Test_R2"].values[0]:.5f}'],
+                            textposition='outside',
+                            textfont=dict(size=10, color=self.colors['dark']),
+                            hovertemplate=f'<b>{model_name}</b><br>Test R²: {row_data["Test_R2"].values[0]:.5f}<br>Test RMSE: {row_data["Test_RMSE"].values[0]:.4f}<extra></extra>',
+                            showlegend=False
+                        ),
+                        row=2, col=2
+                    )
+            
         else:
             # Fallback to validation rankings if test results not available
             top3_models = self.model_results.nlargest(3, 'Val_R2').sort_values('Val_R2')
@@ -804,8 +811,10 @@ class ProfessionalVisualizationEngine:
             template=self.template,
             font=dict(family=self.font_family, size=11),
             margin=dict(t=100, b=60, l=70, r=70),  # Standard margins
-            hovermode='closest'  # Enable hover for all subplots
+            hovermode='closest',  # Enable hover for all subplots
+            barmode='stack'  # Stack bars to show individual colors
         )
+        
         
         # Add custom annotation for Best Model Score without overriding others
         fig.add_annotation(
