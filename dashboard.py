@@ -21,9 +21,13 @@ server = app.server  # Expose the server for deployment
 # Initialize visualization engine
 viz_engine = ProfessionalVisualizationEngine()
 
-# Load test results for metrics
+# Load test results for metrics (memory optimized)
 test_results = pd.read_csv('data/final_test_results.csv')
 best_test_r2 = test_results['Test_R2'].max() if not test_results.empty else 0.9978
+
+# Clear unnecessary data to save memory
+import gc
+gc.collect()
 
 # Feature engineering function (matching the training pipeline)
 def create_features(df):

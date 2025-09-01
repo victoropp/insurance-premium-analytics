@@ -1,0 +1,10 @@
+# Minimal requirements for Render deployment
+dash
+dash-bootstrap-components
+pandas
+numpy
+plotly
+scikit-learn
+joblib
+gunicorn
+python-dotenv
