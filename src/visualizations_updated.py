@@ -687,8 +687,7 @@ class ProfessionalVisualizationEngine:
                     y=['Voting<br>Ensemble', 'Stacking<br>(Ridge)', 'Stacking<br>(Linear)'],
                     orientation='h',
                     marker=dict(
-                        color=test_results_sorted['Test_R2'],
-                        colorscale=[[0.994, '#FFE5CC'], [0.997, '#FFB366'], [0.998, self.colors['success']]],
+                        color=['#FF6B6B', '#4ECDC4', '#45B7D1'],  # Three distinct colors: red, teal, blue
                         showscale=False,
                         line=dict(color='white', width=1)
                     ),
