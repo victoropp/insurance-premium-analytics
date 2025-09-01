@@ -29,6 +29,16 @@ best_test_r2 = test_results['Test_R2'].max() if not test_results.empty else 0.99
 import gc
 gc.collect()
 
+# Lazy load models to save memory - only load when needed
+models = {}
+
+def load_model(model_name):
+    """Load model only when needed to save memory"""
+    if model_name not in models:
+        models[model_name] = joblib.load(f'models/{model_name}.pkl')
+        gc.collect()  # Clean up after loading
+    return models[model_name]
+
 # Feature engineering function (matching the training pipeline)
 def create_features(df):
     """Apply the same feature engineering as in training"""

@@ -1,8 +1,10 @@
-# Minimal requirements for Render deployment
-# Lightweight requirements for demo version
+# Optimized requirements for full version
 dash
 dash-bootstrap-components
 pandas
+numpy
 plotly
+scikit-learn
+joblib
 gunicorn
 python-dotenv
