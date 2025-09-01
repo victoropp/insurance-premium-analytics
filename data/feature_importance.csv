@@ -1,0 +1,20 @@
+Feature,Importance
+Accidents_Per_Year_Driving,0.5706565
+Driver Experience,0.1937127
+Driver Age,0.1481683
+Risk_Score,0.039427463
+Mileage_Per_Year_Driving,0.021131126
+Car_Age_Driver_Age_Ratio,0.020638749
+Car Manufacturing Year,0.0026659665
+Annual Mileage (x1000 km),0.0010401466
+Previous Accidents,0.0010030948
+Experience_Rate,0.0009780441
+Age_Experience_Ratio,0.0005779016
+Car Age,0.0
+Driver_Age_Squared,0.0
+Accidents_Squared,0.0
+Experience_Squared,0.0
+High_Risk_Driver,0.0
+New_Driver,0.0
+Old_Car,0.0
+High_Mileage,0.0
